@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { Progress } from '@base-ui/react/progress';
+import PVMChart from '#components/PVMChart';
 
 function Overview() {
     function getDate(mod: string) {
@@ -23,39 +24,77 @@ function Overview() {
         else if (mod === "month") {
             return dateArr[1];
         }
+        else if (mod === "year") {
+            return dateArr[3];
+        }
     }
   return (
     <div className="w-full h-full flex flex-col items-center justify-start">
         {/* first row */}
-        <div className="flex w-full items-top justify-between p-6">
+        <div className="flex w-full items-top justify-between pt-6 px-6">
             <p className="text-2xl font-semibold">{getDate("full")}</p>
-            <Button className="flex h-10 w-10 items-center justify-center gap-2 rounded-none border border-neutral-950"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg></Button>
+            <Button className="flex h-10 w-10 items-center justify-center border-2 rounded-lg border-zinc-300 px-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg></Button>
         </div>
-        {/* second row - 2 cards */}
-        <div className="flex w-full h-full items-start justify-between gap-6 p-6">
-            <Card className="w-1/2 h-1/3 flex flex-col border border-zinc-300 px-2">
+        {/* second row - 3 cards */}
+        <div className="flex w-full h-full items-start justify-between gap-6 pt-6 px-6">
+            <Card className="w-1/3 h-full flex flex-col border border-zinc-300 px-2">
                 <CardHeader>
-                    <CardTitle className='text-3xl'>Lifetime P/L</CardTitle>
+                    <CardTitle className='text-2xl'>Total Portfolio</CardTitle>
                 </CardHeader>
-                <CardContent>
-                    <p className="text-2xl font-bold">S$5000</p>
+                <CardContent className='w-full h-full flex flex-col justify-center items-start gap-2'>
+                    <p className="text-5xl">S$5000</p>
+                    <CardDescription>As of {getDate("no-day")}</CardDescription>
+                </CardContent>
+                
+            </Card>
+            <Card className="w-1/3 h-full flex flex-col border border-zinc-300 px-2">
+                <CardHeader>
+                    <CardTitle className='text-2xl'>Lifetime P/L</CardTitle>
+                </CardHeader>
+                <CardContent className='w-full h-full flex flex-col justify-center items-start gap-2'>
+                    <p className="text-5xl">+S$5000</p>
+                    <CardDescription>As of {getDate("no-day")}</CardDescription>
                 </CardContent>
             </Card>
-            <Card className="w-1/2 h-1/3 flex flex-col border border-zinc-300 px-2">
+            <Card className="w-1/3 h-full flex flex-col border border-zinc-300 px-2">
                 <CardHeader>
-                    <CardTitle>Money Invested in {getDate("month")}</CardTitle>
+                    <CardTitle className='text-2xl'>Time-Weighted Return</CardTitle>
                 </CardHeader>
-                <CardContent className="flex flex-col items-center justify-center gap-4">
-                    <Progress.Root className="w-3/4" value={50}>
-                    <Progress.Label className="text-sm font-normal text-neutral-950 dark:text-white">S$1250/2500</Progress.Label>
-                    <Progress.Track className="h-4 overflow-hidden bg-neutral-200 dark:bg-neutral-800 rounded-md">
-                        <Progress.Indicator className="bg-neutral-950 transition-[width] duration-500 dark:bg-white"/>
-                    </Progress.Track>
-                    <Progress.Value className="text-right text-sm text-neutral-950 dark:text-white"/>
-                    </Progress.Root>
+                <CardContent className='w-full h-full flex flex-col justify-center items-start gap-2'>
+                    <p className="text-5xl">5000%</p>
+                    <CardDescription>As of {getDate("no-day")}</CardDescription>
                 </CardContent>
             </Card>
         </div>
+        <div className="flex w-full h-full items-start justify-between gap-6 pt-6 px-6">
+            <Card className="w-1/2 h-full flex flex-col border border-zinc-300 px-2">
+                <CardHeader>
+                    <CardTitle className='text-2xl'>Money Invested in {getDate("month")}</CardTitle>
+                </CardHeader>
+                <div className="w-full h-full flex justify-center">
+                    <CardContent className="flex w-full h-full flex-col items-center justify-center gap-4">
+                        <Progress.Root className="w-3/4" value={50}>
+                        <Progress.Label className="text-sm font-normal text-neutral-950 dark:text-white">S$1250/2500</Progress.Label>
+                        <Progress.Track className="h-4 overflow-hidden bg-neutral-200 dark:bg-neutral-800 rounded-md">
+                            <Progress.Indicator className="bg-neutral-950 transition-[width] duration-500 dark:bg-white"/>
+                        </Progress.Track>
+                        <Progress.Value className="text-right text-sm text-neutral-950 dark:text-white"/>
+                        </Progress.Root>
+                    </CardContent>
+                </div>
+                
+                
+            </Card>
+            <Card className="w-1/2 h-full flex flex-col border border-zinc-300 px-2">
+                <CardHeader>
+                    <CardTitle className='text-2xl'>Portfolio VS Market</CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-col w-full h-full items-center justify-center gap-4">
+                    <PVMChart />
+                </CardContent>
+            </Card>
+        </div>
+        
     </div>
   )
 }
