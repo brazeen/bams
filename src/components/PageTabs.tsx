@@ -1,38 +1,45 @@
-import { Tabs } from '@base-ui/react/tabs';
-import Overview from '../features/Overview';
+import { Tabs } from '@base-ui/react/tabs'
+import { ChartNoAxesCombined, CircleEllipsis, LayoutDashboard } from 'lucide-react'
+import Overview from '../features/Overview'
+import Dividends from '../features/Dividends'
+import ComingSoon from '../features/ComingSoon'
 
 const tabClassName =
-  'flex h-[calc(2rem+1px)] items-center justify-center bg-transparent px-2 py-0 font-inherit text-sm font-normal leading-5 break-keep whitespace-nowrap text-neutral-600 outline-none select-none hover:text-neutral-950 focus-visible:border-zinc-700 dark:focus-visible:outline-white data-active:text-neutral-950 dark:text-neutral-300 dark:hover:text-white dark:data-active:text-white border-zinc-400 border-t border-r border-l  order-2 rounded-t-lg';
+  'relative z-10 flex h-10 items-center justify-center gap-2 rounded-t-xl border border-b-0 border-[var(--glass-border)] bg-[color-mix(in_srgb,var(--browser-panel-bg)_52%,transparent)] px-3.5 text-sm font-medium text-[var(--theme-muted)] outline-none backdrop-blur-md transition-all duration-200 hover:bg-[var(--browser-panel-bg)] hover:text-[var(--theme-text)] focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)]/40 data-active:bg-[var(--browser-panel-bg)] data-active:text-[var(--theme-text)] sm:px-5'
 
 const panelClassName =
-  'col-start-1 row-start-1 flex w-full bg-white bg-opacity-75 p-4 text-sm text-neutral-950 z-10 dark:bg-neutral-950 dark:text-white [[hidden]]:hidden border border-2 rounded-b-lg border-zinc-500 dark:border-white rounded-b-lg rounded-tr-lg';
+  'browser-panel w-full rounded-b-[1.6rem] rounded-tr-[1.6rem] border border-[var(--glass-border)] p-3 text-[var(--theme-text)] shadow-[var(--glass-shadow)] outline-none backdrop-blur-md [[hidden]]:hidden sm:p-4'
 
 export default function PageTabs() {
   return (
-    <Tabs.Root className="w-full h-full" defaultValue="overview">
-      <Tabs.List className="relative z-1 -mb-px flex gap-1">
-        <Tabs.Tab className={tabClassName} value="overview">
-          Overview
-        </Tabs.Tab>
-        <Tabs.Tab className={tabClassName} value="dividends">
-          Dividends
-        </Tabs.Tab>
-        <Tabs.Tab className={tabClassName} value="account">
-          Account
-        </Tabs.Tab>
-        <Tabs.Indicator className="absolute top-0 left-0 -z-1 h-full w-(--active-tab-width) translate-x-(--active-tab-left) z-10 border-zinc-500 border-2 rounded-t-lg bg-transparent transition-[translate,width] duration-150 ease-in-out dark:border-white dark:bg-neutral-950" />
-      </Tabs.List>
-      <div className="grid w-full min-h-full grid-cols-1">
-        <Tabs.Panel className={panelClassName} value="overview">
-          <Overview />
-        </Tabs.Panel>
-        <Tabs.Panel className={panelClassName} value="dividends">
-          <p>Milestones and deadlines.</p>
-        </Tabs.Panel>
-        <Tabs.Panel className={panelClassName} value="account">
-          <p>Profile and preferences.</p>
-        </Tabs.Panel>
+    <Tabs.Root className="w-full" defaultValue="overview">
+      <div className="relative z-10 -mb-px flex">
+        <Tabs.List className="relative inline-flex items-end gap-1">
+          <Tabs.Tab aria-label="Overview" className={tabClassName} value="overview">
+            <LayoutDashboard className="size-4" />
+            <span className="hidden sm:inline">Overview</span>
+          </Tabs.Tab>
+          <Tabs.Tab aria-label="Dividends" className={tabClassName} value="dividends">
+            <ChartNoAxesCombined className="size-4" />
+            <span className="hidden sm:inline">Dividends</span>
+          </Tabs.Tab>
+          <Tabs.Tab aria-label="Analytics" className={tabClassName} value="analytics">
+            <CircleEllipsis className="size-4" />
+            <span className="hidden sm:inline">Analytics</span>
+          </Tabs.Tab>
+          <Tabs.Indicator className="absolute bottom-0 left-0 h-0.5 w-(--active-tab-width) translate-x-(--active-tab-left) bg-[var(--theme-primary)] transition-[translate,width] duration-300 ease-out" />
+        </Tabs.List>
       </div>
+
+      <Tabs.Panel className={panelClassName} value="overview">
+        <Overview />
+      </Tabs.Panel>
+      <Tabs.Panel className={panelClassName} value="dividends">
+        <Dividends />
+      </Tabs.Panel>
+      <Tabs.Panel className={panelClassName} value="analytics">
+        <ComingSoon />
+      </Tabs.Panel>
     </Tabs.Root>
-  );
+  )
 }

@@ -1,84 +1,111 @@
 import {
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "../../components/ui/chart"
+} from '../../components/ui/chart'
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+} from 'recharts'
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+const chartData = [
+  { month: 'Jul', portfolio: 100, US: 100, SG: 100 },
+  { month: 'Aug', portfolio: 102.8, US: 101.4, SG: 100.8 },
+  { month: 'Sep', portfolio: 101.6, US: 99.8, SG: 99.2 },
+  { month: 'Oct', portfolio: 105.2, US: 102.1, SG: 101.7 },
+  { month: 'Nov', portfolio: 108.9, US: 104.8, SG: 102.4 },
+  { month: 'Dec', portfolio: 107.7, US: 105.4, SG: 103.6 },
+  { month: 'Jan', portfolio: 112.4, US: 107.2, SG: 104.8 },
+  { month: 'Feb', portfolio: 114.1, US: 108.8, SG: 106.1 },
+  { month: 'Mar', portfolio: 113.2, US: 107.5, SG: 105.4 },
+  { month: 'Apr', portfolio: 117.8, US: 110.6, SG: 107.3 },
+  { month: 'May', portfolio: 119.6, US: 112.3, SG: 108.9 },
+  { month: 'Jun', portfolio: 121.4, US: 113.1, SG: 110.2 },
+]
+
+const chartConfig = {
+  portfolio: {
+    label: 'Your portfolio',
+    color: 'var(--theme-primary)',
+  },
+  US: {
+    label: 'US market',
+    color: 'var(--theme-secondary)',
+  },
+  SG: {
+    label: 'SG market',
+    color: 'var(--theme-positive)',
+  },
+} satisfies ChartConfig
 
 export default function PVMChart() {
-    const chartData = [
-        { month: "January", portfolio: 186, US: 245, SG: 92 },
-        { month: "February", portfolio: 305, US: 132, SG: 215 },
-        { month: "March", portfolio: 237, US: 289, SG: 143 },
-        { month: "April", portfolio: 73, US: 94, SG: 320 },
-        { month: "May", portfolio: 209, US: 310, SG: 188 },
-        { month: "June", portfolio: 214, US: 178, SG: 274 },
-        { month: "July", portfolio: 186, US: 221, SG: 105 },
-        { month: "August", portfolio: 305, US: 115, SG: 299 },
-        { month: "September", portfolio: 237, US: 264, SG: 167 },
-        { month: "October", portfolio: 73, US: 82, SG: 236 },
-        { month: "November", portfolio: 209, US: 195, SG: 85 },
-        { month: "December", portfolio: 214, US: 340, SG: 122 }
-    ] //testing
-
-    const chartConfig = {
-    portfolio: {
-        label: "Portfolio",
-        color: "#4ade80",
-    },
-    US: {
-        label: "US Market",
-        color: "#3b82f6",
-    },
-    SG: {
-        label: "Singapore Market",
-        color: "#f59e0b",
-    },
-    } satisfies ChartConfig;
-    return (
-    <ChartContainer config={chartConfig} className="max-h-[200px] w-full">
-            <AreaChart
-                accessibilityLayer
-                data={chartData}
-                margin={{
-                left: 12,
-                right: 12,
-                }}
-            >
-                <CartesianGrid vertical={false} />
-                <XAxis
-                dataKey="month"
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-                tickFormatter={(value) => value.slice(0, 3)}
-                />
-                <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent indicator="dot" hideLabel />}
-                />
-                <Area
-                dataKey="portfolio"
-                type="linear"
-                fillOpacity={0}
-                stroke="var(--color-portfolio)"
-                />
-                 <Area
-                dataKey="US"
-                type="linear"
-                fillOpacity={0}
-                stroke="var(--color-US)"
-
-                />
-                 <Area
-                dataKey="SG"
-                type="linear"
-                fillOpacity={0}
-                stroke="var(--color-SG)"
-                />
-            </AreaChart>
-            </ChartContainer>
-    );
+  return (
+    <ChartContainer
+      className="h-full min-h-[145px] w-full aspect-auto"
+      config={chartConfig}
+      initialDimension={{ width: 620, height: 260 }}
+    >
+      <AreaChart data={chartData} margin={{ left: 0, right: 10, top: 8, bottom: 0 }}>
+        <defs>
+          <linearGradient id="portfolio-fill" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="5%" stopColor="var(--color-portfolio)" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="var(--color-portfolio)" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <CartesianGrid stroke="var(--glass-border)" strokeDasharray="4 5" vertical={false} />
+        <XAxis
+          axisLine={false}
+          dataKey="month"
+          tickLine={false}
+          tickMargin={10}
+        />
+        <YAxis
+          axisLine={false}
+          domain={['dataMin - 2', 'dataMax + 2']}
+          tickLine={false}
+          tickMargin={8}
+          width={42}
+        />
+        <ChartTooltip
+          content={
+            <ChartTooltipContent
+              className="border-[var(--glass-border)] bg-[var(--glass-strong)] backdrop-blur-xl"
+              indicator="line"
+            />
+          }
+          cursor={{ stroke: 'var(--glass-border)', strokeDasharray: '4 4' }}
+        />
+        <Area
+          dataKey="US"
+          fill="transparent"
+          stroke="var(--color-US)"
+          strokeDasharray="5 5"
+          strokeWidth={2}
+          type="monotone"
+        />
+        <Area
+          dataKey="SG"
+          fill="transparent"
+          stroke="var(--color-SG)"
+          strokeDasharray="2 5"
+          strokeWidth={2}
+          type="monotone"
+        />
+        <Area
+          dataKey="portfolio"
+          fill="url(#portfolio-fill)"
+          stroke="var(--color-portfolio)"
+          strokeWidth={2.6}
+          type="monotone"
+        />
+        <ChartLegend content={<ChartLegendContent />} />
+      </AreaChart>
+    </ChartContainer>
+  )
 }
