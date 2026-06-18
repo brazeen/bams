@@ -101,7 +101,7 @@ function Overview() {
 
             return (
               <Card
-                className="min-h-32 justify-between p-0 hover:-translate-y-1 hover:border-[var(--theme-primary)]/25 hover:shadow-[0_28px_70px_color-mix(in_srgb,var(--theme-primary)_12%,transparent)]"
+                className="min-h-32 justify-between p-0 hover:border-[var(--theme-primary)]/25 hover:shadow-[0_28px_70px_color-mix(in_srgb,var(--theme-primary)_12%,transparent)]"
                 key={metric.label}
               >
                 <CardHeader className="flex flex-row items-start justify-between gap-3 px-5 pt-4">

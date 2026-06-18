@@ -27,7 +27,7 @@ export default function PageTabs() {
             <CircleEllipsis className="size-4" />
             <span className="hidden sm:inline">Analytics</span>
           </Tabs.Tab>
-          <Tabs.Indicator className="absolute bottom-0 left-0 h-0.5 w-(--active-tab-width) translate-x-(--active-tab-left) bg-[var(--theme-primary)] transition-[translate,width] duration-300 ease-out" />
+          <Tabs.Indicator className="absolute bottom-0 left-0 h-0.5 translate-x-(--active-tab-left) bg-[var(--theme-primary)] transition-[translate,width] duration-300 ease-out" />
         </Tabs.List>
       </div>
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Activity, Sparkles } from 'lucide-react'
+import { Activity, LogOutIcon, Sparkles } from 'lucide-react'
 import PageTabs from './components/PageTabs'
+import { Button } from '@base-ui/react/button'
 
 type TimePeriod = 'morning' | 'afternoon' | 'sunset' | 'night'
 
@@ -140,9 +141,6 @@ function App() {
               tabIndex={0}
               title="Brandon's Asset Management System"
             >
-              <span className="flex size-7 items-center justify-center rounded-full border border-[var(--glass-border)] bg-[var(--glass-bg)] backdrop-blur-md">
-                <Sparkles className="size-3.5 text-[var(--theme-primary)]" />
-              </span>
               <span className="brand-label relative block h-4 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[var(--theme-muted)]">
                 <span className="brand-short absolute left-0 top-0 whitespace-nowrap">
                   BAMS
@@ -161,13 +159,19 @@ function App() {
             </div>
           </div>
 
-          <div className="absolute inset-x-0 top-10 text-center sm:top-8">
-            <p className="mb-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-[var(--theme-primary)]">
-              Your financial dashboard
-            </p>
-            <h1 className="text-2xl font-semibold tracking-[-0.04em] text-[var(--theme-text)] sm:text-4xl">
+          <div className="absolute inset-x-0 top-10 text-center sm:top-12">
+            <h1 className="text-4xl font-semibold tracking-[-0.04em] text-[var(--theme-text)] sm:text-5xl">
               {getGreeting(period, 'Brandon')}
             </h1>
+            <Button className={'border-[var(--glass-border)] bg-[var(--glass-strong)] rounded-lg opacity-75 px-3.5 py-1.5 text-[var(--theme-muted)] hover:bg-[var(--glass-bg)] hover:text-[var(--theme-text)] hover:border-[var(--theme-primary)]/25 hover:shadow-[0_28px_70px_color-mix(in_srgb,var(--theme-primary)_12%,transparent)] transition-colors duration-200 mt-5 cursor-pointer'}>
+              <div className="flex items-center gap-2">
+                <LogOutIcon className="size-3.5 text-[var(--theme-muted)]" />
+                <span className="text-[0.68rem] font-semibold text-[var(--theme-muted)]">
+                  Sign out
+                </span>
+              </div>
+              
+            </Button>
           </div>
 
           <div className="absolute inset-x-0 top-[5.4rem] flex justify-center gap-4 sm:hidden">
